@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Cinzel Decorative' rel='stylesheet'>
+
+
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'school/style.css' %}" />
+
+
+    <title>Sparkswood:Home</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand/logo -->
+  <a class="navbar-brand offset-md-1" style="color:#f00;font-family: 'Cinzel Decorative';font-weight:600;font-size: 25px;" href="#">Sparkswood</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+     <div class="collapse navbar-collapse" id="collapsibleNavbar">
+     <!-- Links -->
+    <ul class="navbar-nav offset-md-1">
+    <li class="nav-item">
+      <a class="nav-link active redline" href="{%url 'school:index'%}">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{%url 'school:classes'%}">Classes</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{%url 'school:subjects'%}">Subjects</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{%url 'school:fees'%}">Fees</a>
+    </li>
+  </ul>
+  </div>
+</nav>
+<!-- navigation ends here -->
+
+<div class="container-fluid text-center div_back">
+  <div  class="container text-section">
+    <h1>Welcome to <span style="color:#f00;font-family: 'Cinzel Decorative';font-weight:600;">Sparkswood</span></h1>
+  <p>Where need meets the technology.</p>
+</div>
+
+
+    </div>
+</body>
+</html>

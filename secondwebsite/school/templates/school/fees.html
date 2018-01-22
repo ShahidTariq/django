@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Cinzel Decorative' rel='stylesheet'>
+
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'school/style.css' %}" />
+
+
+    <title>Sparkswood:Fees</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand/logo -->
+  <a class="navbar-brand offset-md-1" style="color:#f00;font-family: 'Cinzel Decorative';font-weight:600;font-size: 25px;" href="#">Sparkswood</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+     <div class="collapse navbar-collapse" id="collapsibleNavbar">
+     <!-- Links -->
+    <ul class="navbar-nav offset-md-1">
+    <li class="nav-item">
+      <a class="nav-link" href="{%url 'school:index'%}">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{%url 'school:classes'%}">Classes</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{%url 'school:subjects'%}">Subjects</a>
+    </li>
+    <li class="nav-item active redline">
+      <a class="nav-link" href="{%url 'school:fees'%}">Fees</a>
+    </li>
+  </ul>
+  </div>
+</nav>
+<!-- navigation ends here -->
+
+<div class="container-fluid text-center">
+
+</div>
+
+<div class="container" style="padding:20px;">
+  <h2>Add Fees:</h2>
+
+  <form action="{% url 'school:addFee'%}" method="post">
+        {% csrf_token %}
+      <div class="form-group">
+      <label for="cls">Class:</label>
+          <select id="cls" name="classId" class="form-control">
+              {% if class_list %}
+              {% for c in class_list %}
+              <option value={{c.id}} >{{c.class_name}}</option>
+              {%endfor%}
+              {%endif%}
+          </select>
+    </div>
+
+      <div class="form-group">
+      <label for="name">Fee Amount:</label>
+      <input type="number" class="form-control" id="name" placeholder="Enter fee amount" name="amount" min="0">
+    </div>
+    <div class="form-group">
+      <label for="freq">Frequency:</label>
+      <input type="number" class="form-control" id="freq" placeholder="Enter frequency (example 1)" max="12" min="0" name="frequency">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Fees</button>
+  </form>
+</div>
+<br/><br/>
+<div class="container">
+  <h2>Fees</h2>
+
+  <table class="table table-dark table-striped">
+    <thead>
+      <tr>
+        <th>Fee Name</th>
+        <th>Fee Amount</th>
+        <th>Fee Frequency</th>
+          <th>Delete</th>
+      </tr>
+    </thead>
+
+        <tbody>
+            {% if fee_list %}
+     {% for c in fee_list %}
+      <tr>
+          <td>{{c.Class}}</td>
+          <td>{{c.fee_amount}}</td>
+          <td>{{c.frequency}}</td>
+          <form action="{%url 'school:deleteFee' c.id%}" method="post">
+                  {% csrf_token %}
+
+          <td>
+              <input type="hidden" value="{{ c.id}}" name="fee_id"/>
+              <input class="btn btn-primary" type="submit" value="Delete" >
+
+          </td>
+              </form>
+      </tr>
+    {% endfor %}
+
+    {% endif %}
+    </tbody>
+  </table>
+</div>
+
+
+</body>
+</html>

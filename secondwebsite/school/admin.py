@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Classes,Fees,Subjects
+
+admin.site.register(Classes)
+admin.site.register(Fees)
+admin.site.register(Subjects)

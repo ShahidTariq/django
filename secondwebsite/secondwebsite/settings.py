@@ -34,6 +34,7 @@ INSTALLED_APPS = [
 
     'polls.apps.PollsConfig',
     'tech.apps.TechConfig',
+    'school.apps.SchoolConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
