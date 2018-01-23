@@ -8,4 +8,5 @@ urlpatterns = [
     path('tech/', include('tech.urls')),
     path('polls/', include('polls.urls')),
     path('school/', include('school.urls')),
+    path('ajaxApp/', include('ajaxApp.urls')),
 ]

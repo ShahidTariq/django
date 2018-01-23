@@ -13,7 +13,18 @@ def index(request):
 
 def classes(request):
     class_list = Classes.objects.all()
+
+    if request.is_ajax():
+        print("<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>")
+
+        tableContent=""
+
+        for c in class_list:
+            tableContent += "<tr> <td>" + c.class_name + "</td> <td>" + c.class_desc + " </td>  <td> <form action = 'deleteClass' " + str(c.id) +" method = post> {%csrf_token %} <input type = 'hidden' value = '" + str(c.id) + "' name='class_id' /> <input class ='btn btn-primary' type='submit' value='Delete'> </ form> </ td> </ tr>"
+        return HttpResponse(tableContent)
+
     template = loader.get_template('school/classes.html')
+
     context = {
         'class_list': class_list,
     }
@@ -67,6 +78,7 @@ def addClass(request):
     try:
         if request.method == 'POST':
             pass
+
 
     except (KeyError, Classes.DoesNotExist):
         # Redisplay the question voting form.
