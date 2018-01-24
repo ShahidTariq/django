@@ -1,9 +1,9 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
 from django.template import loader
 from .models import Classes, Subjects, Fees
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-
+from django.forms.models import model_to_dict
 
 def index(request):
     template = loader.get_template('school/index.html')
@@ -20,7 +20,8 @@ def classes(request):
         tableContent=""
 
         for c in class_list:
-            tableContent += "<tr> <td>" + c.class_name + "</td> <td>" + c.class_desc + " </td>  <td> <form action = 'deleteClass' " + str(c.id) +" method = post> {%csrf_token %} <input type = 'hidden' value = '" + str(c.id) + "' name='class_id' /> <input class ='btn btn-primary' type='submit' value='Delete'> </ form> </ td> </ tr>"
+            tableContent += "<tr> <td>" + c.class_name + "</td> <td>" + c.class_desc + " </td>  <td> <form action = '" + str(c.id) +"/deleteClass' method = post  ><input type = 'hidden' value = '" + str(c.id) + "' name='class_id' /> <input class ='btn btn-primary' type='submit' value='Delete'> </ form> </ td> </ tr>"
+
         return HttpResponse(tableContent)
 
     template = loader.get_template('school/classes.html')
@@ -90,6 +91,11 @@ def addClass(request):
         classRecord.class_name = request.POST['name']
         classRecord.class_desc = request.POST['desc']
         classRecord.save()
+
+        if request.is_ajax():
+            print("<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>")
+            return JsonResponse(model_to_dict(classRecord))
+
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
