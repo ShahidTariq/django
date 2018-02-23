@@ -44,7 +44,14 @@
     <li class="nav-item active redline">
       <a class="nav-link" href="{%url 'school:fees'%}">Fees</a>
     </li>
+
+            <form class="form-inline" style="position:absolute;right:10px;" method="post" action="{%url 'school:logout' %}">
+             {% csrf_token%}
+             <button class="btn btn-primary" type="submit">Logout</button>
+            </form>
+
   </ul>
+
   </div>
 </nav>
 <!-- navigation ends here -->

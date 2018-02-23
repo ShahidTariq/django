@@ -4,13 +4,15 @@ from .models import Classes, Subjects, Fees
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.forms.models import model_to_dict
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login,logout
 def index(request):
     template = loader.get_template('school/index.html')
     context = {}
     return HttpResponse(template.render(context, request))
 
 
+@login_required(login_url="/school/login/")
 def classes(request):
     class_list = Classes.objects.all()
 
@@ -31,7 +33,7 @@ def classes(request):
     }
     return HttpResponse(template.render(context, request))
 
-
+@login_required(login_url="/school/login/")
 def subjects(request):
     subject_list = Subjects.objects.all()
     class_list = Classes.objects.all()
@@ -42,7 +44,7 @@ def subjects(request):
     }
     return HttpResponse(template.render(context, request))
 
-
+@login_required(login_url="/school/login/")
 def fees(request):
     fee_list = Fees.objects.all()
     class_list = Classes.objects.all()
@@ -53,7 +55,7 @@ def fees(request):
     }
     return HttpResponse(template.render(context, request))
 
-
+@login_required(login_url="/school/login/")
 def addSubject(request):
     try:
         if request.method == 'POST':
@@ -73,7 +75,7 @@ def addSubject(request):
         template = loader.get_template('school/subjects.html')
         return HttpResponseRedirect("subjects")
 
-
+@login_required(login_url="/school/login/")
 def addClass(request):
 
     try:
@@ -103,7 +105,7 @@ def addClass(request):
         template = loader.get_template('school/classes.html')
         return HttpResponseRedirect("classes")
 
-
+@login_required(login_url="/school/login/")
 def addFee(request):
     try:
         if request.method == 'POST':
@@ -123,7 +125,7 @@ def addFee(request):
         template = loader.get_template('school/fees.html')
         return HttpResponseRedirect("fees")
 
-
+@login_required(login_url="/school/login/")
 def deleteClass(request, class_id):
 
     try:
@@ -141,7 +143,7 @@ def deleteClass(request, class_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('school:classes'))
 
-
+@login_required(login_url="/school/login/")
 def deleteSubject(request, subject_id):
 
     try:
@@ -159,6 +161,7 @@ def deleteSubject(request, subject_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('school:subjects'))
 
+@login_required(login_url="/school/login/")
 def deleteFee(request, fee_id):
 
     try:
@@ -175,3 +178,9 @@ def deleteFee(request, fee_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('school:fees'))
+
+
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+    return HttpResponseRedirect(reverse('school:index'))
